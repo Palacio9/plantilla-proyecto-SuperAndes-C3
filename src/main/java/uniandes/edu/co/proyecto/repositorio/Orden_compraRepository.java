@@ -123,7 +123,6 @@ public interface Orden_compraRepository extends JpaRepository<Orden_compra, Inte
         nativeQuery = true
     )
     Collection<Orden_compra> getLast();
-<<<<<<< HEAD
     
     
      /**
@@ -145,7 +144,6 @@ public interface Orden_compraRepository extends JpaRepository<Orden_compra, Inte
     )
     List<uniandes.edu.co.proyecto.modelo.DocumentoIngresoDTO> obtenerDocumentosIngreso(@Param("idSucursal") Integer idSucursal,
                                                        @Param("idBodega") Integer idBodega);
-=======
 
     /**
      * RNF2: Leer los ids de los productos que se compran en una orden de compra
@@ -180,7 +178,6 @@ public interface Orden_compraRepository extends JpaRepository<Orden_compra, Inte
     )
     void actualizarEstadoAEntregado(@Param("id") Integer id);
 
->>>>>>> 2ddc33c8a66d12aa9e3b79ac4ed1f0b411704e7c
 }
 
 
