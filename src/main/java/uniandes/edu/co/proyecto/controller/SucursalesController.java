@@ -40,15 +40,15 @@ public class SucursalesController {
      * @return ResponseEntity<?> Colección con el resultado de la transacción.
      */
     @GetMapping("/sucursales/consulta")
-    public ResponseEntity<?> darSucursales(@RequestParam(required = false) Integer id_producto,
-                                           @RequestParam(required = false) String nombre_producto) {
+    public ResponseEntity<?> darSucursales( @RequestParam(required = false) Integer id_producto,
+                                            @RequestParam(required = false) String nombre_producto) {
         try {
             if (id_producto != null || nombre_producto != null) {
                 /*
                  * Caso en el que se quieren consultar las sucursales en las que está un producto dado su id o nombre.
                  */
-                Collection<Object[]> resultado = sucursalRepository.darSucursalesConProducto(id_producto,
-                                                                                             nombre_producto);
+                Collection<Object[]> resultado = sucursalRepository.darSucursalesConProducto(   id_producto,
+                                                                                                nombre_producto);
                 if (resultado.isEmpty())
                     throw new Exception(MS.SIN_RESULTADOS_EXCEPTION);
                 return ResponseEntity.ok(resultado);

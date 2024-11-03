@@ -29,15 +29,29 @@ public interface Orden_compraRepository extends JpaRepository<Orden_compra, Inte
     @Modifying
     @Transactional
     @Query(
-        value = "INSERT INTO ordenes_compra (fecha_creacion, fecha_esperada, estado, id_bodega, id_proveedor) " +
-                "VALUES (:fecha_creacion, :fecha_esperada, :estado, :id_bodega, :id_proveedor)",
+        value = """
+            INSERT INTO ordenes_compra (
+                fecha_creacion,
+                fecha_esperada,
+                estado,
+                id_bodega,
+                id_proveedor
+            )
+            VALUES (
+                :fecha_creacion,
+                :fecha_esperada,
+                :estado,
+                :id_bodega,
+                :id_proveedor
+            )
+            """,
         nativeQuery = true
     )
-    void insertarOrden_compra(@Param("fecha_creacion") Date fecha_creacion,
-                              @Param("fecha_esperada") Date fecha_esperada,
-                              @Param("estado") String estado,
-                              @Param("id_bodega") Integer id_bodega,
-                              @Param("id_proveedor") Integer id_proveedor);
+    void insertarOrden_compra(  @Param("fecha_creacion") Date fecha_creacion,
+                                @Param("fecha_esperada") Date fecha_esperada,
+                                @Param("estado") String estado,
+                                @Param("id_bodega") Integer id_bodega,
+                                @Param("id_proveedor") Integer id_proveedor);
 
     /**
      * RF8 : Actualiza el estado de una orden de compra a 'anulada'.
@@ -49,33 +63,45 @@ public interface Orden_compraRepository extends JpaRepository<Orden_compra, Inte
     @Modifying
     @Transactional
     @Query(
-        value = "UPDATE ordenes_compra " +
-                "SET estado = 'anulada' " +
-                "WHERE id = :id",
+        value = """
+            UPDATE ordenes_compra
+            SET estado = 'anulada'
+            WHERE id = :id
+            """,
         nativeQuery = true
     )
     void anularOrden_compra(@Param("id") Integer id);
 
     /**
-     * SQL : Recupera todos los registros de la tabla 'ordenes_compra'.
+     * Recupera todos los registros de la tabla 'ordenes_compra'.
      *
      * @return Collection de las órdenes de compra encontradas.
      */
     @Query(
-        value = "SELECT * FROM ordenes_compra",
+        value = """
+            SELECT oc.*,
+                c.cantidad,
+                c.precio_unitario,
+                c.id_producto
+            FROM ordenes_compra oc
+            JOIN compra c ON c.id_orden_compra = oc.id
+            """,
         nativeQuery = true
     )
-    Collection<Orden_compra> getAll();
+    Collection<Object> getAll();
 
     /**
-     * SQL : Recupera el registro de la tabla 'ordenes_compra' cuyo ID coincide con el valor especificado.
+     * RNF6: Obtiene una orden de compra dado su id
      *
      * @param id Identificador de la orden de compra que se quiere encontrar.
      * @return Collection con la orden de compra encontrada.
      */
     @Query(
-        value = "SELECT * FROM ordenes_compra " +
-                "WHERE id = :id",
+        value = """
+            SELECT *
+            FROM ordenes_compra
+            WHERE id = :id
+            """,
         nativeQuery = true
     )
     Collection<Orden_compra> darOrden_compra(@Param("id") Integer id);
@@ -86,11 +112,18 @@ public interface Orden_compraRepository extends JpaRepository<Orden_compra, Inte
      * @return Collection con un único elemento que será el último ID creado.
      */
     @Query(
-        value = "SELECT * FROM ordenes_compra " +
-                "WHERE id = (SELECT MAX(id) FROM ordenes_compra)",
+        value = """
+            SELECT *
+            FROM ordenes_compra
+            WHERE id = (
+                SELECT MAX(id)
+                FROM ordenes_compra
+            )
+            """,
         nativeQuery = true
     )
     Collection<Orden_compra> getLast();
+<<<<<<< HEAD
     
     
      /**
@@ -112,6 +145,42 @@ public interface Orden_compraRepository extends JpaRepository<Orden_compra, Inte
     )
     List<uniandes.edu.co.proyecto.modelo.DocumentoIngresoDTO> obtenerDocumentosIngreso(@Param("idSucursal") Integer idSucursal,
                                                        @Param("idBodega") Integer idBodega);
+=======
+
+    /**
+     * RNF2: Leer los ids de los productos que se compran en una orden de compra
+     *
+     * @param id_orden_compra orden de compra que se quiere observas
+     * @return Collection<Integer> Collecton con los productos encontrados asociados a la ordend de compra
+     */
+    @Query(
+        value = """
+            SELECT co.id_producto
+            FROM compra co
+            WHERE co.id_orden_compra = :id_orden_compra
+            """,
+        nativeQuery = true
+    )
+    Collection<Integer> getProductos(@Param("id_orden_compra")Integer id_orden_compra);
+
+    /**
+     * RFNF7 : Actualiza el estado de una orden de compra a 'entregada'.
+     *
+     * @param id Identificador de la orden de compra cuya estado va a cambiar.
+     */
+    @Modifying
+    @Transactional
+    @Query(
+        value = """
+            UPDATE ordenes_compra
+            SET estado = 'entregada'
+            WHERE id = :id
+            """,
+        nativeQuery = true
+    )
+    void actualizarEstadoAEntregado(@Param("id") Integer id);
+
+>>>>>>> 2ddc33c8a66d12aa9e3b79ac4ed1f0b411704e7c
 }
 
 

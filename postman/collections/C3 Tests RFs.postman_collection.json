@@ -1864,29 +1864,35 @@
 									"\r",
 									"<table class=\"tftable\" border=\"1\">\r",
 									"    <tr>\r",
-									"        <th>ID</th>\r",
-									"        <th>Estado</th>\r",
-									"        <th>ID de Proveedor</th>\r",
-									"        <th>Fecha Esperada</th>\r",
-									"        <th>Fecha de Creación</th>\r",
-									"        <th>ID de Bodega</th>\r",
+									"        <th>orden</th>\r",
+									"        <th>fecha creacion</th>\r",
+									"        <th>fecha esperada</th>\r",
+									"        <th>estado</th>\r",
+									"        <th>bodega</th>\r",
+									"        <th>proveedor</th>\r",
+									"        <th>cantidad</th>\r",
+									"        <th>precio unitario</th>\r",
+									"        <th>producto</th>\r",
 									"    </tr>\r",
 									"    \r",
-									"    {{#each this}} <!-- Iterar sobre cada elemento de la respuesta -->\r",
+									"    {{#each response}}\r",
 									"        <tr>\r",
-									"            <td>{{id}}</td>  <!-- ID de la orden de compra -->\r",
-									"            <td>{{estado}}</td>  <!-- Estado -->\r",
-									"            <td>{{id_proveedor.id}} | {{id_proveedor.nombre}}</td>  <!-- ID y Nombre del proveedor -->\r",
-									"            <td>{{fecha_esperada}}</td>  <!-- Fecha esperada -->\r",
-									"            <td>{{fecha_creacion}}</td>  <!-- Fecha de creación -->\r",
-									"            <td>{{id_bodega.id}} | {{id_bodega.nombre}}</td>  <!-- ID y Nombre de la bodega -->\r",
+									"            <td>{{this.[0]}}</td>\r",
+									"            <td>{{this.[1]}}</td>\r",
+									"            <td>{{this.[2]}}</td>\r",
+									"            <td>{{this.[3]}}</td>\r",
+									"            <td>{{this.[4]}}</td>\r",
+									"            <td>{{this.[5]}}</td>\r",
+									"            <td>{{this.[6]}}</td>\r",
+									"            <td>{{this.[7]}}</td>\r",
+									"            <td>{{this.[8]}}</td>\r",
 									"        </tr>\r",
 									"    {{/each}}\r",
 									"</table>\r",
 									"`;\r",
 									"\r",
 									"function constructVisualizerPayload() {\r",
-									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
 									"}\r",
 									"\r",
 									"pm.visualizer.set(template, constructVisualizerPayload());\r",
@@ -1913,6 +1919,47 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "RF10 Contiene",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contiene/1/1/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contiene",
+								"1",
+								"1",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Registra el ingreso de productos a una bodega"
 		}
 	],
 	"event": [

@@ -25,15 +25,31 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @param codigo_barras      Número entero que representa el código de barras.
      * @param volumen            Volumen del producto en metros cúbicos.
      * @param peso               Peso del producto en gramos.
-     * @param id_tipo_categoria   Identificador de la categoría del producto.
+     * @param id_tipo_categoria  Identificador de la categoría del producto.
      */
     @Modifying
     @Transactional
     @Query(
-        value = "INSERT INTO productos (nombre, fecha_expiracion, codigo_barras, volumen, peso, id_tipo_categoria) " +
-                "VALUES (:nombre, :fecha_expiracion, :codigo_barras, :volumen, :peso, :id_tipo_categoria)",
+        value = """
+            INSERT INTO productos (
+                nombre,
+                fecha_expiracion,
+                codigo_barras,
+                volumen,
+                peso,
+                id_tipo_categoria
+            )
+            VALUES (
+                :nombre,
+                :fecha_expiracion,
+                :codigo_barras,
+                :volumen,
+                :peso,
+                :id_tipo_categoria
+            )
+            """,
         nativeQuery = true
-    )
+    )    
     void insertarProducto(@Param("nombre") String nombre, 
                           @Param("fecha_expiracion") Date fecha_expiracion, 
                           @Param("codigo_barras") String codigo_barras, 
@@ -51,12 +67,16 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection de el/los productos encontrados.
      */
     @Query(
-        value = "SELECT * FROM productos b " +
-                "WHERE id = :id OR b.nombre = :nombre",
+        value = """
+            SELECT *
+            FROM productos b
+            WHERE id = :id
+               OR b.nombre = :nombre
+            """,
         nativeQuery = true
-    )
+    )    
     Collection<Producto> darProductoPorIdONombre(@Param("id") Integer id, 
-                                                  @Param("nombre") String nombre);
+                                                 @Param("nombre") String nombre);
 
     /**
      * RF6.3 : Actualiza un producto.
@@ -74,22 +94,24 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     @Modifying
     @Transactional
     @Query(
-        value = "UPDATE productos " +
-                "SET nombre = :nombre, " +
-                "fecha_expiracion = :fecha_expiracion, " +
-                "codigo_barras = :codigo_barras, " +
-                "volumen = :volumen, " +
-                "peso = :peso, " +
-                "id_tipo_categoria = :id_tipo_categoria " +
-                "WHERE id = :id",
+        value = """
+            UPDATE productos
+            SET nombre = :nombre,
+                fecha_expiracion = :fecha_expiracion,
+                codigo_barras = :codigo_barras,
+                volumen = :volumen,
+                peso = :peso,
+                id_tipo_categoria = :id_tipo_categoria
+            WHERE id = :id
+            """,
         nativeQuery = true
     )
-    void actualizarProducto(@Param("id") Integer id, 
-                            @Param("nombre") String nombre, 
-                            @Param("fecha_expiracion") Date fecha_expiracion, 
-                            @Param("codigo_barras") String codigo_barras, 
-                            @Param("volumen") Float volumen, 
-                            @Param("peso") Float peso, 
+    void actualizarProducto(@Param("id") Integer id,
+                            @Param("nombre") String nombre,
+                            @Param("fecha_expiracion") Date fecha_expiracion,
+                            @Param("codigo_barras") String codigo_barras,
+                            @Param("volumen") Float volumen,
+                            @Param("peso") Float peso,
                             @Param("id_tipo_categoria") Integer id_tipo_categoria);
 
     /**
@@ -98,8 +120,14 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection con un único elemento que será el último ID creado.
      */
     @Query(
-        value = "SELECT * FROM productos " +
-                "WHERE id = (SELECT MAX(id) FROM productos)",
+        value = """
+            SELECT *
+            FROM productos
+            WHERE id = (
+                SELECT MAX(id)
+                FROM productos
+            )
+            """,
         nativeQuery = true
     )
     Collection<Producto> getLast();
@@ -111,13 +139,16 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection con el resultado de la consulta.
      */
     @Query(
-        value = "SELECT co.id_bodega, pr.id AS id_producto, " +
-                "(SUM(co.cantidad) / co.capacidad) AS porcentaje_ocupacion " +
-                "FROM contiene co " +
-                "JOIN productos pr ON co.id_producto = pr.id " +
-                "WHERE pr.id IN (:lista_productos) " +
-                "GROUP BY co.id_bodega, pr.id, co.capacidad " +
-                "ORDER BY pr.id ASC, co.id_bodega ASC",
+        value = """
+            SELECT co.id_bodega,
+                    pr.id AS id_producto,
+                    (SUM(co.cantidad) / co.capacidad) AS porcentaje_ocupacion
+            FROM contiene co
+            JOIN productos pr ON co.id_producto = pr.id
+            WHERE pr.id IN (:lista_productos)
+            GROUP BY co.id_bodega, pr.id, co.capacidad
+            ORDER BY pr.id ASC, co.id_bodega ASC
+            """,
         nativeQuery = true
     )
     Collection<Object[]> darPorcentajeOcupacion(@Param("lista_productos") List<Integer> lista_productos);
@@ -130,18 +161,23 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection con los productos encontrados en el rango de precios.
      */
     @Query(
-        value = "SELECT co.id_bodega, bo.nombre, pr.*, " +
-                "co.costo_promedio AS precio, tc.nombre " +
-                "FROM contiene co " +
-                "JOIN productos pr ON co.id_producto = pr.id " +
-                "JOIN bodegas bo ON co.id_bodega = bo.id " +
-                "JOIN tipos_categoria tc ON pr.id_tipo_categoria = tc.id " +
-                "WHERE co.costo_promedio BETWEEN :minPrice AND :maxPrice " +
-                "ORDER BY pr.id ASC, co.costo_promedio DESC",
+        value = """
+            SELECT co.id_bodega,
+                    bo.nombre,
+                    pr.*,
+                    co.costo_promedio AS precio,
+                    tc.nombre
+            FROM contiene co
+            JOIN productos pr ON co.id_producto = pr.id
+            JOIN bodegas bo ON co.id_bodega = bo.id
+            JOIN tipos_categoria tc ON pr.id_tipo_categoria = tc.id
+            WHERE co.costo_promedio BETWEEN :minPrice AND :maxPrice
+            ORDER BY pr.id ASC, co.costo_promedio DESC
+            """,
         nativeQuery = true
     )
-    Collection<Object[]> darProductosEnRangoDePrecios(@Param("minPrice") Float minPrice, 
-                                                      @Param("maxPrice") Float maxPrice);
+    Collection<Object[]> darProductosEnRangoDePrecios(  @Param("minPrice") Float minPrice,
+                                                        @Param("maxPrice") Float maxPrice);
 
     /**
      * RFC2.2 : Muestra los productos con fecha de vencimiento posterior o inferior a una fecha dada.
@@ -151,12 +187,15 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection con los productos encontrados.
      */
     @Query(
-        value = "SELECT * FROM productos " +
-                "WHERE fecha_expiracion BETWEEN :minFecha AND :maxFecha",
+        value = """
+            SELECT *
+            FROM productos
+            WHERE fecha_expiracion BETWEEN :minFecha AND :maxFecha
+            """,
         nativeQuery = true
     )
-    Collection<Producto> darProductosEnRangoDeFechaDeVencimiento(@Param("minFecha") Date minFecha, 
-                                                                 @Param("maxFecha") Date maxFecha);
+    Collection<Producto> darProductosEnRangoDeFechaDeVencimiento(   @Param("minFecha") Date minFecha,
+                                                                    @Param("maxFecha") Date maxFecha);
 
     /**
      * RFC2.3 : Muestra los productos pertenecientes a una sucursal dado su ID.
@@ -165,11 +204,14 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection con los datos de los productos pertenecientes a la sucursal.
      */
     @Query(
-        value = "SELECT pr.*, bo.id_sucursal AS sucursal " +
-                "FROM productos pr " +
-                "JOIN contiene co ON pr.id = co.id_producto " +
-                "JOIN bodegas bo ON co.id_bodega = bo.id " +
-                "WHERE bo.id_sucursal = :id_sucursal",
+        value = """
+            SELECT  pr.*,
+                    bo.id_sucursal AS sucursal
+            FROM productos pr
+            JOIN contiene co ON pr.id = co.id_producto
+            JOIN bodegas bo ON co.id_bodega = bo.id
+            WHERE bo.id_sucursal = :id_sucursal
+            """,
         nativeQuery = true
     )
     Collection<Object[]> darProductosPertenecientesASucursal(@Param("id_sucursal") Integer id_sucursal);
@@ -181,8 +223,11 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection con los productos encontrados.
      */
     @Query(
-        value = "SELECT * FROM productos pr " +
-                "WHERE pr.id_tipo_categoria = :id_tipo_categoria",
+        value = """
+            SELECT *
+            FROM productos pr
+            WHERE pr.id_tipo_categoria = :id_tipo_categoria
+            """,
         nativeQuery = true
     )
     Collection<Producto> darProductosPertenecientesATipoCategoria(@Param("id_tipo_categoria") Integer id_tipo_categoria);
@@ -195,17 +240,24 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection con el ID, nombre, cantidad, cantidad mínima y costo promedio del producto en la bodega.
      */
     @Query(
-        value = "SELECT pr.id, pr.nombre, co.cantidad, co.cantidad_minima, co.costo_promedio, " +
-                "bo.id, bo.id_sucursal " +
-                "FROM productos pr " +
-                "JOIN contiene co ON pr.id = co.id_producto " +
-                "JOIN bodegas bo ON co.id_bodega = bo.id " +
-                "WHERE bo.id = :id_bodega " +
-                "AND bo.id_sucursal = :id_sucursal",
+        value = """
+            SELECT pr.id,
+                    pr.nombre,
+                    co.cantidad,
+                    co.cantidad_minima,
+                    co.costo_promedio,
+                    bo.id,
+                    bo.id_sucursal
+            FROM productos pr
+            JOIN contiene co ON pr.id = co.id_producto
+            JOIN bodegas bo ON co.id_bodega = bo.id
+            WHERE bo.id = :id_bodega
+                AND bo.id_sucursal = :id_sucursal
+            """,
         nativeQuery = true
     )
-    Collection<Object[]> darInventarioDeBodega(@Param("id_sucursal") Integer id_sucursal, 
-                                               @Param("id_bodega") Integer id_bodega);
+    Collection<Object[]> darInventarioDeBodega( @Param("id_sucursal") Integer id_sucursal,
+                                                @Param("id_bodega") Integer id_bodega);
 
     /**
      * RFC5 : Muestra todos los productos que requieren una orden de compra.
@@ -213,14 +265,21 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
      * @return Collection de productos y demás datos.
      */
     @Query(
-        value = "SELECT pr.id, pr.nombre AS producto, bo.id AS bodega, bo.id_sucursal AS sucursal, " +
-                "co.cantidad, co.cantidad_minima, ofr.id_proveedor AS proveedor " +
-                "FROM productos pr " +
-                "JOIN contiene co ON pr.id = co.id_producto " +
-                "JOIN bodegas bo ON co.id_bodega = bo.id " +
-                "JOIN ofrece ofr ON pr.id = ofr.id_producto " +
-                "WHERE co.cantidad < co.cantidad_minima " +
-                "ORDER BY pr.id ASC",
+        value = """
+            SELECT pr.id,
+                    pr.nombre AS producto,
+                    bo.id AS bodega,
+                    bo.id_sucursal AS sucursal,
+                    co.cantidad,
+                    co.cantidad_minima,
+                    ofr.id_proveedor AS proveedor
+            FROM productos pr
+            JOIN contiene co ON pr.id = co.id_producto
+            JOIN bodegas bo ON co.id_bodega = bo.id
+            JOIN ofrece ofr ON pr.id = ofr.id_producto
+            WHERE co.cantidad < co.cantidad_minima
+            ORDER BY pr.id ASC
+            """,
         nativeQuery = true
     )
     Collection<Object[]> darProductosQueRequierenOrdenCompra();

@@ -73,7 +73,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/productos/consulta?ids=0,4",
+							"raw": "{{baseUrl}}/productos/consulta?ids=1,4",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -84,7 +84,7 @@
 							"query": [
 								{
 									"key": "ids",
-									"value": "0,4"
+									"value": "1,4"
 								}
 							]
 						}
@@ -173,7 +173,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/productos/consulta?ids=9",
+							"raw": "{{baseUrl}}/productos/consulta?ids=6",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -184,7 +184,7 @@
 							"query": [
 								{
 									"key": "ids",
-									"value": "9"
+									"value": "6"
 								}
 							]
 						}
@@ -445,7 +445,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/productos/consulta?fechaInferiorA=2020-02-01",
+									"raw": "{{baseUrl}}/productos/consulta?fechaInferiorA=2024-10-16",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -456,7 +456,7 @@
 									"query": [
 										{
 											"key": "fechaInferiorA",
-											"value": "2020-02-01"
+											"value": "2024-10-16"
 										}
 									]
 								}
@@ -1249,7 +1249,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/productos/consulta?id_sucursal=1&id_bodega=3",
+							"raw": "{{baseUrl}}/productos/consulta?id_sucursal=2&id_bodega=2",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1260,11 +1260,11 @@
 							"query": [
 								{
 									"key": "id_sucursal",
-									"value": "1"
+									"value": "2"
 								},
 								{
 									"key": "id_bodega",
-									"value": "3"
+									"value": "2"
 								}
 							]
 						}
@@ -1498,7 +1498,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/sucursales/consulta?id_producto=3",
+							"raw": "{{baseUrl}}/sucursales/consulta?id_producto=7",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1509,7 +1509,7 @@
 							"query": [
 								{
 									"key": "id_producto",
-									"value": "3"
+									"value": "7"
 								}
 							]
 						}
@@ -1578,7 +1578,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/sucursales/consulta?id_producto=9",
+							"raw": "{{baseUrl}}/sucursales/consulta?id_producto=6",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1589,7 +1589,7 @@
 							"query": [
 								{
 									"key": "id_producto",
-									"value": "9"
+									"value": "6"
 								}
 							]
 						}
@@ -1658,7 +1658,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/sucursales/consulta?nombre_producto=Lavadora",
+							"raw": "{{baseUrl}}/sucursales/consulta?nombre_producto=Licuadora",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1669,7 +1669,7 @@
 							"query": [
 								{
 									"key": "nombre_producto",
-									"value": "Lavadora"
+									"value": "Licuadora"
 								}
 							]
 						}

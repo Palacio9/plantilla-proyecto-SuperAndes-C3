@@ -24,7 +24,7 @@ public class BodegasController {
 
     /**
      * Extrae las bodegas de la tabla bodegas.
-     * 
+     *
      * @return Collection<Bodega> de bodegas encontradas.
      */
     @GetMapping("/bodegas")
@@ -34,7 +34,7 @@ public class BodegasController {
 
     /**
      * Añade una bodega a la tabla bodegas dada su información.
-     * 
+     *
      * @param bodega Bodega que se quiere crear.
      * @return ResponseEntity<Map<String,Object>> resultado de la transacción.
      */
@@ -55,7 +55,7 @@ public class BodegasController {
 
     /**
      * Elimina una bodega dado su id.
-     * 
+     *
      * @param id Identificador único de una bodega próxima a ser eliminada.
      * @return ResponseEntity<Map<String,Object>> resultado de la transacción.
      */
@@ -73,7 +73,7 @@ public class BodegasController {
 
     /**
      * Devuelve la última instancia creada.
-     * 
+     *
      * @return Bodega última fila añadida.
      */
     public Bodega getLast() {

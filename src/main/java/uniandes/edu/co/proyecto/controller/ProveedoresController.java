@@ -40,9 +40,9 @@ public class ProveedoresController {
      */
     @PostMapping("/proveedores/new/save")
     public ResponseEntity<Map<String, Object>> proveedorGuardar(@RequestBody Proveedor proveedor) {
-        proveedorRepository.insertarProveedor(proveedor.getNombre(),
-                                              proveedor.getTelefono(),
-                                              proveedor.getDireccion());
+        proveedorRepository.insertarProveedor(  proveedor.getNombre(),
+                                                proveedor.getTelefono(),
+                                                proveedor.getDireccion());
         proveedor.setId(getLast().getId());
         Map<String, Object> response = MS.response("ok", "create", proveedor);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -56,8 +56,8 @@ public class ProveedoresController {
      * @return ResponseEntity<Map<String, Object>> Resultado de la transacción.
      */
     @PostMapping("/proveedores/{id}/edit/save")
-    public ResponseEntity<Map<String, Object>> proveedorEditarGuardar(@PathVariable("id") Integer id,
-                                                                     @RequestBody Proveedor proveedor) {
+    public ResponseEntity<Map<String, Object>> proveedorEditarGuardar(  @PathVariable("id") Integer id,
+                                                                        @RequestBody Proveedor proveedor) {
         try {
             proveedorRepository.actualizarProveedor(id,
                                                     proveedor.getNombre(),

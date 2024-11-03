@@ -41,14 +41,14 @@ public class Tipos_categoriaController {
      * @return ResponseEntity<?> Resultado de la transacción.
      */
     @GetMapping("/tipos_categoria/consulta")
-    public ResponseEntity<?> darTipo_categoria(@RequestParam(required = false) Integer id,
-                                               @RequestParam(required = false) String nombre) {
+    public ResponseEntity<?> darTipo_categoria( @RequestParam(required = false) Integer id,
+                                                @RequestParam(required = false) String nombre) {
         try {
             if (id == null && nombre == null) {
                 throw new Exception(MS.SIN_PARAMETROS_EXCEPTION);
             } else {
-                Collection<Tipo_categoria> tipos = tipo_categoriaRepository.darTipo_categoriaPorIdONombre(id, 
-                                                                                                          nombre);
+                Collection<Tipo_categoria> tipos = tipo_categoriaRepository.darTipo_categoriaPorIdONombre(  id,
+                                                                                                            nombre);
                 if (tipos.isEmpty()) {
                     throw new Exception(MS.SIN_RESULTADOS_EXCEPTION);
                 }

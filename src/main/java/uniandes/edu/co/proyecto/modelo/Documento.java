@@ -1,5 +1,7 @@
 package uniandes.edu.co.proyecto.modelo;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,11 +22,22 @@ public class Documento {
     @JoinColumn(name = "id_orden_compra", referencedColumnName = "id")
     private Orden_compra id_orden_compra;
 
+    private Date fecha_creacion;
+
+    public Date getFecha_creacion() {
+        return fecha_creacion;
+    }
+
+    public void setFecha_creacion(Date fecha_creacion) {
+        this.fecha_creacion = fecha_creacion;
+    }
+
     public Documento() {
     }
 
-    public Documento(Orden_compra id_orden_compra) {
+    public Documento(Orden_compra id_orden_compra, Date fecha_creacion) {
         this.id_orden_compra = id_orden_compra;
+        this.fecha_creacion = fecha_creacion;
     }
 
     public Integer getId() {

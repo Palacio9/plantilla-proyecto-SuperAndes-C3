@@ -25,17 +25,17 @@ public class Ordenes_compraController {
 
     /**
      * Extrae las instancias de la tabla ordenes_compra.
-     * 
+     *
      * @return Collection<Orden_compra> de instancias de la clase Orden_compra.
      */
     @GetMapping("/ordenes_compra")
-    public Collection<Orden_compra> darOrdens_compra() {
-        return orden_compraRepository.getAll();
+    public ResponseEntity<?> darOrdens_compra() {
+        return ResponseEntity.ok(orden_compraRepository.getAll());
     }
 
     /**
      * Extrae la orden de compra que tiene el id proporcionado.
-     * 
+     *
      * @param id Identificador de la orden de compra.
      * @return Collection<Orden_compra> de ordenes de compra - tamaño = 1.
      */
@@ -45,7 +45,7 @@ public class Ordenes_compraController {
 
     /**
      * Añade una orden de compra a la tabla ordenes_compra.
-     * 
+     *
      * @param orden_compra Orden de compra que se quiere crear.
      * @return ResponseEntity<Map<String,Object>> resultado de la transacción.
      */
@@ -68,7 +68,7 @@ public class Ordenes_compraController {
 
     /**
      * Cambia el estado de una orden de compra de vigente a anulada. En otros casos, no hace nada.
-     * 
+     *
      * @param id Identificador de la orden de compra a actualizar.
      * @return ResponseEntity<Map<String,Object>> resultado de la transacción.
      */
@@ -76,7 +76,7 @@ public class Ordenes_compraController {
     public ResponseEntity<Map<String,Object>> orden_compraEditarGuardar(@PathVariable("id") Integer id) {
         try {
             Orden_compra orden_compra = ((List<Orden_compra>) darOrden_compra(id)).get(0);
-            if (orden_compra.getEstado().equalsIgnoreCase("entregada") || 
+            if (orden_compra.getEstado().equalsIgnoreCase("entregada") ||
                 orden_compra.getEstado().equalsIgnoreCase("anulada")) {
                 throw new Exception(MS.EXCEPTION_ANULAR_ORDEN_COMPRA_ENTREGADA_O_ANULADA);
             }
@@ -91,7 +91,7 @@ public class Ordenes_compraController {
 
     /**
      * Devuelve la última instancia creada.
-     * 
+     *
      * @return Orden_compra última fila añadida.
      */
     public Orden_compra __getLast() {

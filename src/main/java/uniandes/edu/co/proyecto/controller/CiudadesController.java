@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +23,7 @@ public class CiudadesController {
 
     /**
      * Extrae las instancias de la tabla ciudades.
-     * 
+     *
      * @return Collection<Ciudad> de instancias de la clase Ciudad.
      */
     @GetMapping("/ciudades")
@@ -34,7 +33,7 @@ public class CiudadesController {
 
     /**
      * Añade una ciudad a la tabla ciudades dada su información.
-     * 
+     *
      * @param ciudad Ciudad que se quiere crear.
      * @return ResponseEntity<Map<String,Object>> resultado de la transacción.
      */
@@ -49,7 +48,7 @@ public class CiudadesController {
 
     /**
      * Devuelve la última instancia creada.
-     * 
+     *
      * @return Ciudad última fila añadida.
      */
     public Ciudad getLast() {

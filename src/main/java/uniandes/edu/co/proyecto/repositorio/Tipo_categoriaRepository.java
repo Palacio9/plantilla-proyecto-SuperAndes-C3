@@ -25,12 +25,22 @@ public interface Tipo_categoriaRepository extends JpaRepository<Tipo_categoria, 
     @Modifying
     @Transactional
     @Query(
-        value = "INSERT INTO tipos_categoria (nombre, descripcion, caracteristicas) " +
-                "VALUES (:nombre, :descripcion, :caracteristicas)",
+        value = """
+            INSERT INTO tipos_categoria (
+                nombre,
+                descripcion,
+                caracteristicas
+            )
+            VALUES (
+                :nombre,
+                :descripcion,
+                :caracteristicas
+            )
+            """,
         nativeQuery = true
     )
-    void insertarTipo_categoria(@Param("nombre") String nombre, 
-                                @Param("descripcion") String descripcion, 
+    void insertarTipo_categoria(@Param("nombre") String nombre,
+                                @Param("descripcion") String descripcion,
                                 @Param("caracteristicas") String caracteristicas);
 
     /**
@@ -43,12 +53,15 @@ public interface Tipo_categoriaRepository extends JpaRepository<Tipo_categoria, 
      * @return Collection con la categoría(s) encontrada(s).
      */
     @Query(
-        value = "SELECT * FROM tipos_categoria " +
-                "WHERE id = :id OR nombre = :nombre",
+        value = """
+            SELECT *
+            FROM tipos_categoria
+            WHERE id = :id OR nombre = :nombre
+            """,
         nativeQuery = true
     )
-    Collection<Tipo_categoria> darTipo_categoriaPorIdONombre(@Param("id") Integer id, 
-                                                               @Param("nombre") String nombre);
+    Collection<Tipo_categoria> darTipo_categoriaPorIdONombre(   @Param("id") Integer id,
+                                                                @Param("nombre") String nombre);
 
     /**
      * Obtiene la última categoría creada.
@@ -56,8 +69,14 @@ public interface Tipo_categoriaRepository extends JpaRepository<Tipo_categoria, 
      * @return Collection con un único elemento que será el último ID creado.
      */
     @Query(
-        value = "SELECT * FROM tipos_categoria " +
-                "WHERE id = (SELECT MAX(id) FROM tipos_categoria)",
+        value = """
+            SELECT *
+            FROM tipos_categoria
+            WHERE id = (
+                SELECT MAX(id)
+                FROM tipos_categoria
+            )
+            """,
         nativeQuery = true
     )
     Collection<Tipo_categoria> getLast();

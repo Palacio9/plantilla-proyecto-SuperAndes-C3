@@ -27,15 +27,29 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
     @Modifying
     @Transactional
     @Query(
-        value = "INSERT INTO sucursales (nombre, tamanio, telefono, direccion, id_ciudad) " +
-                "VALUES (:nombre, :tamanio, :telefono, :direccion, :id_ciudad)",
+        value = """
+            INSERT INTO sucursales (
+                nombre,
+                tamanio,
+                telefono,
+                direccion,
+                id_ciudad
+            )
+            VALUES (
+                :nombre,
+                :tamanio,
+                :telefono,
+                :direccion,
+                :id_ciudad
+            )
+            """,
         nativeQuery = true
     )
-    void insertarSucursal(@Param("nombre") String nombre, 
-                          @Param("tamanio") String tamanio, 
-                          @Param("telefono") String telefono, 
-                          @Param("direccion") String direccion, 
-                          @Param("id_ciudad") Integer id_ciudad);
+    void insertarSucursal(  @Param("nombre") String nombre,
+                            @Param("tamanio") String tamanio,
+                            @Param("telefono") String telefono,
+                            @Param("direccion") String direccion,
+                            @Param("id_ciudad") Integer id_ciudad);
 
     /**
      * Obtiene la última sucursal creada.
@@ -43,8 +57,14 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
      * @return Collection con un único elemento que será el último ID creado.
      */
     @Query(
-        value = "SELECT * FROM sucursales " +
-                "WHERE id = (SELECT MAX(id) FROM sucursales)",
+        value = """
+            SELECT *
+            FROM sucursales
+            WHERE id = (
+                SELECT MAX(id)
+                FROM sucursales
+            )
+            """,
         nativeQuery = true
     )
     Collection<Sucursal> getLast();
@@ -57,15 +77,19 @@ public interface SucursalRepository extends JpaRepository<Sucursal, Integer> {
      * @return Collection con las sucursales encontradas.
      */
     @Query(
-        value = "SELECT su.*, pr.id, pr.nombre " +
-                "FROM sucursales su " +
-                "JOIN bodegas bo ON su.id = bo.id_sucursal " +
-                "JOIN contiene co ON bo.id = co.id_bodega " +
-                "JOIN productos pr ON co.id_producto = pr.id " +
-                "WHERE pr.id = :id OR pr.nombre = :nombre",
+        value = """
+            SELECT  su.*,
+                    pr.id,
+                    pr.nombre
+            FROM sucursales su
+            JOIN bodegas bo ON su.id = bo.id_sucursal
+            JOIN contiene co ON bo.id = co.id_bodega
+            JOIN productos pr ON co.id_producto = pr.id
+            WHERE pr.id = :id OR pr.nombre = :nombre
+            """,
         nativeQuery = true
     )
-    Collection<Object[]> darSucursalesConProducto(@Param("id") Integer id, @Param("nombre") String nombre);
-
+    Collection<Object[]> darSucursalesConProducto(  @Param("id") Integer id,
+                                                    @Param("nombre") String nombre);
 
 }

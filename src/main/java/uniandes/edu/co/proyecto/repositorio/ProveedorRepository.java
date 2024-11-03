@@ -25,13 +25,23 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer> {
     @Modifying
     @Transactional
     @Query(
-        value = "INSERT INTO proveedores (nombre, telefono, direccion) " +
-                "VALUES (:nombre, :telefono, :direccion)",
+        value = """
+            INSERT INTO proveedores (
+                nombre,
+                telefono,
+                direccion
+            )
+            VALUES (
+                :nombre,
+                :telefono,
+                :direccion
+            )
+            """,
         nativeQuery = true
     )
-    void insertarProveedor(@Param("nombre") String nombre, 
-                           @Param("telefono") String telefono, 
-                           @Param("direccion") String direccion);
+    void insertarProveedor( @Param("nombre") String nombre,
+                            @Param("telefono") String telefono,
+                            @Param("direccion") String direccion);
 
     /**
      * RF4.2 : Actualiza un proveedor.
@@ -47,17 +57,19 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer> {
     @Modifying
     @Transactional
     @Query(
-        value = "UPDATE proveedores " +
-                "SET nombre = :nombre, " +
-                "telefono = :telefono, " +
-                "direccion = :direccion " +
-                "WHERE id = :id",
+        value = """
+            UPDATE proveedores
+            SET nombre = :nombre,
+                telefono = :telefono,
+                direccion = :direccion
+            WHERE id = :id
+            """,
         nativeQuery = true
     )
-    void actualizarProveedor(@Param("id") Integer id, 
-                             @Param("nombre") String nombre, 
-                             @Param("telefono") String telefono, 
-                             @Param("direccion") String direccion);
+    void actualizarProveedor(   @Param("id") Integer id,
+                                @Param("nombre") String nombre,
+                                @Param("telefono") String telefono,
+                                @Param("direccion") String direccion);
 
     /**
      * Obtiene el último proveedor creado.
@@ -65,8 +77,14 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer> {
      * @return Collection con un único elemento que será el último ID creado.
      */
     @Query(
-        value = "SELECT * FROM proveedores " +
-                "WHERE id = (SELECT MAX(id) FROM proveedores)",
+        value = """
+            SELECT *
+            FROM proveedores
+            WHERE id = (
+                SELECT MAX(id)
+                FROM proveedores
+            )
+            """,
         nativeQuery = true
     )
     Collection<Proveedor> getLast();

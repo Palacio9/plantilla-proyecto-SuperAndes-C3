@@ -30,7 +30,7 @@ public class ProductosController {
 
     /**
      * Extrae los productos de la tabla productos.
-     * 
+     *
      * @return Collection<Producto> de productos.
      */
     @GetMapping("/productos")
@@ -40,7 +40,7 @@ public class ProductosController {
 
     /**
      * Consulta los productos que cumplen con una condición.
-     * 
+     *
      * @param id                    Identificador del producto.
      * @param nombre                Nombre del producto.
      * @param ids                   Lista de identificadores de productos.
@@ -54,16 +54,16 @@ public class ProductosController {
      * @return ResponseEntity<?>    Resultado de la transacción.
      */
     @GetMapping("/productos/consulta")
-    public ResponseEntity<?> darProducto(@RequestParam(required = false) Integer id,
-                                         @RequestParam(required = false) String nombre,
-                                         @RequestParam(required = false) List<Integer> ids,
-                                         @RequestParam(required = false) Float minPrice,
-                                         @RequestParam(required = false) Float maxPrice,
-                                         @RequestParam(required = false) String fechaPosteriorA,
-                                         @RequestParam(required = false) String fechaInferiorA,
-                                         @RequestParam(required = false) Integer id_sucursal,
-                                         @RequestParam(required = false) Integer id_tipo_categoria,
-                                         @RequestParam(required = false) Integer id_bodega) {
+    public ResponseEntity<?> darProducto(   @RequestParam(required = false) Integer id,
+                                            @RequestParam(required = false) String nombre,
+                                            @RequestParam(required = false) List<Integer> ids,
+                                            @RequestParam(required = false) Float minPrice,
+                                            @RequestParam(required = false) Float maxPrice,
+                                            @RequestParam(required = false) String fechaPosteriorA,
+                                            @RequestParam(required = false) String fechaInferiorA,
+                                            @RequestParam(required = false) Integer id_sucursal,
+                                            @RequestParam(required = false) Integer id_tipo_categoria,
+                                            @RequestParam(required = false) Integer id_bodega) {
 
         try {
             if (id != null || nombre != null) {
@@ -135,27 +135,33 @@ public class ProductosController {
                     // Solo fecha máxima
                     LocalDate inferiorLocaldate = LocalDate.parse(fechaInferiorA, formatter);
                     Date inferiorSqlDate = Date.valueOf(inferiorLocaldate);
-                    Collection<Producto> respuesta = productoRepository.darProductosEnRangoDeFechaDeVencimiento(minimaSqlDate, inferiorSqlDate);
+                    Collection<Producto> respuesta = productoRepository.darProductosEnRangoDeFechaDeVencimiento(minimaSqlDate,
+                                                                                                                inferiorSqlDate);
                     if (respuesta.isEmpty())
                         throw new Exception(MS.SIN_RESULTADOS_EXCEPTION);
                     return ResponseEntity.ok(respuesta);
 
                 } else if (fechaInferiorA == null) {
                     // Solo fecha mínima
-                    LocalDate posteriorLocalDate = LocalDate.parse(fechaPosteriorA, formatter);
+                    LocalDate posteriorLocalDate = LocalDate.parse( fechaPosteriorA,
+                                                                    formatter);
                     Date posteriorSqlDate = Date.valueOf(posteriorLocalDate);
-                    Collection<Producto> respuesta = productoRepository.darProductosEnRangoDeFechaDeVencimiento(posteriorSqlDate, maximaSqlDate);
+                    Collection<Producto> respuesta = productoRepository.darProductosEnRangoDeFechaDeVencimiento(posteriorSqlDate,
+                                                                                                                maximaSqlDate);
                     if (respuesta.isEmpty())
                         throw new Exception(MS.SIN_RESULTADOS_EXCEPTION);
                     return ResponseEntity.ok(respuesta);
 
                 } else {
                     // Ambas fechas
-                    LocalDate inferiorLocaldate = LocalDate.parse(fechaInferiorA, formatter);
+                    LocalDate inferiorLocaldate = LocalDate.parse(  fechaInferiorA,
+                                                                    formatter);
                     Date inferiorSqlDate = Date.valueOf(inferiorLocaldate);
-                    LocalDate posteriorLocalDate = LocalDate.parse(fechaPosteriorA, formatter);
+                    LocalDate posteriorLocalDate = LocalDate.parse(fechaPosteriorA,
+                                                                    formatter);
                     Date posteriorSqlDate = Date.valueOf(posteriorLocalDate);
-                    Collection<Producto> respuesta = productoRepository.darProductosEnRangoDeFechaDeVencimiento(posteriorSqlDate, inferiorSqlDate);
+                    Collection<Producto> respuesta = productoRepository.darProductosEnRangoDeFechaDeVencimiento(posteriorSqlDate,
+                                                                                                                inferiorSqlDate);
                     if (respuesta.isEmpty())
                         throw new Exception(MS.SIN_RESULTADOS_EXCEPTION);
                     return ResponseEntity.ok(respuesta);
@@ -200,6 +206,7 @@ public class ProductosController {
 
     /**
      * Consulta los productos que requieren de una orden de compra.
+     *
      * @return ResponseEntity<?> Resultado de la operación.
      */
     @GetMapping("/productos/consulta/reqOrdenCompra")
@@ -216,7 +223,7 @@ public class ProductosController {
 
     /**
      * Inserta un nuevo producto en la base de datos.
-     * 
+     *
      * @param producto Producto a agregar.
      * @return ResponseEntity<?> Resultado de la operación.
      */
@@ -240,7 +247,7 @@ public class ProductosController {
 
     /**
      * Actuliza la informacion de un producto, este se úbica con su id y se actuliza con la informacion nueva
-     * 
+     *
      * @param id       Identificador de el producto que se quiere actualizar
      * @param producto Informacion actualizada del producto
      * @return ResponseEntity<Map<String,Object>> Resultado de la operación.
@@ -249,13 +256,13 @@ public class ProductosController {
     public ResponseEntity<Map<String,Object>> productoEditarGuardar(@PathVariable("id") Integer id,
                                                                     @RequestBody Producto producto) {
         try {
-            productoRepository.actualizarProducto(id,
-                                                  producto.getNombre(),
-                                                  producto.getFecha_expiracion(),
-                                                  producto.getCodigo_barras(),
-                                                  producto.getVolumen(),
-                                                  producto.getPeso(),
-                                                  producto.getId_tipo_categoria().getId());
+            productoRepository.actualizarProducto(  id,
+                                                    producto.getNombre(),
+                                                    producto.getFecha_expiracion(),
+                                                    producto.getCodigo_barras(),
+                                                    producto.getVolumen(),
+                                                    producto.getPeso(),
+                                                    producto.getId_tipo_categoria().getId());
             Map<String,Object> response = MS.response("ok","update",producto);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
@@ -266,7 +273,7 @@ public class ProductosController {
 
     /**
      * Devuelve la ultima instancia creada
-     * 
+     *
      * @return ultima fila aniadida
      */
     public Producto getLast(){

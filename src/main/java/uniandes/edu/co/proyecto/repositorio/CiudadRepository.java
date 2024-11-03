@@ -23,8 +23,14 @@ public interface CiudadRepository extends JpaRepository<Ciudad, Integer> {
     @Modifying
     @Transactional
     @Query(
-        value = "INSERT INTO ciudades (nombre) " +
-                "VALUES (:nombre)",
+        value = """
+            INSERT INTO ciudades (
+                nombre
+            )
+            VALUES (
+                :nombre
+            )
+            """,
         nativeQuery = true
     )
     void insertarCiudad(@Param("nombre") String nombre);
@@ -35,8 +41,14 @@ public interface CiudadRepository extends JpaRepository<Ciudad, Integer> {
      * @return Collection<Ciudad> con un único elemento que será el último ID creado.
      */
     @Query(
-        value = "SELECT * FROM ciudades " +
-                "WHERE id = (SELECT MAX(id) FROM ciudades)",
+        value = """
+            SELECT *
+            FROM ciudades
+            WHERE id = (
+                SELECT MAX(id)
+                FROM ciudades
+            )
+            """,
         nativeQuery = true
     )
     Collection<Ciudad> getLast();

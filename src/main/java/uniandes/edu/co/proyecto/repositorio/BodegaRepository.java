@@ -25,8 +25,18 @@ public interface BodegaRepository extends JpaRepository<Bodega, Integer> {
     @Modifying
     @Transactional
     @Query(
-        value = "INSERT INTO bodegas (nombre, tamanio, id_sucursal) " +
-                "VALUES (:nombre, :tamanio, :id_sucursal)",
+        value = """
+            INSERT INTO bodegas (
+                nombre,
+                tamanio,
+                id_sucursal
+            )
+            VALUES (
+                :nombre,
+                :tamanio,
+                :id_sucursal
+            )
+            """,
         nativeQuery = true
     )
     void insertarBodega(@Param("nombre") String nombre,
@@ -43,8 +53,10 @@ public interface BodegaRepository extends JpaRepository<Bodega, Integer> {
     @Modifying
     @Transactional
     @Query(
-        value = "DELETE FROM bodegas " +
-                "WHERE id = :id",
+        value = """
+            DELETE FROM bodegas
+            WHERE id = :id
+            """,
         nativeQuery = true
     )
     void eliminarBodega(@Param("id") Integer id);
@@ -55,8 +67,14 @@ public interface BodegaRepository extends JpaRepository<Bodega, Integer> {
      * @return Collection<Bodega> con un único elemento que será el último ID creado.
      */
     @Query(
-        value = "SELECT * FROM bodegas " +
-                "WHERE id = (SELECT MAX(id) FROM bodegas)",
+        value = """
+            SELECT *
+            FROM bodegas
+            WHERE id = (
+                SELECT MAX(id)
+                FROM bodegas
+            )
+            """,
         nativeQuery = true
     )
     Collection<Bodega> getLast();
