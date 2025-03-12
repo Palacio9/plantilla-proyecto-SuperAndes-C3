@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="servicios")
-
+"lol"
 
 public abstract class ServicioEntity {
     @Id
