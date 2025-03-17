@@ -1,0 +1,2034 @@
+{
+	"info": {
+		"_postman_id": "69737c37-d79a-4fba-9ba6-92311fe406be",
+		"name": "C3 Tests RFs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37456751"
+	},
+	"item": [
+		{
+			"name": "RF1 Ciudad",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let responseJson = pm.response.json();\r",
+									"let id_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Ciudad\"].id;\r",
+									"pm.collectionVariables.set(\"ciudad_test\", id_test);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Ciudad Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ciudades/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ciudades",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar todas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>   <!-- ID de la ciudad -->\r",
+									"            <td>{{this.nombre}}</td> <!-- Nombre de la ciudad -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/ciudades",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ciudades"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF2 Sucursal",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let responseJson = pm.response.json();\r",
+									"let id_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Sucursal\"].id;\r",
+									"pm.collectionVariables.set(\"sucursal_test\", id_test);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Sucursal Test\",\r\n    \"tamanio\": \"test\",\r\n    \"telefono\": \"test\",\r\n    \"direccion\": \"test\",\r\n    \"id_ciudad\": {\r\n        \"id\": {{ciudad_test}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sucursales/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sucursales",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear - id_ciudad invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Sucural Test\",\r\n    \"tamanio\": \"Test\",\r\n    \"telefono\": \"Test\",\r\n    \"direccion\": \"Test\",\r\n    \"id_ciudad\": {\r\n        \"id\": 1000\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sucursales/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sucursales",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar todas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Tamaño</th>\r",
+									"        <th>Teléfono</th>\r",
+									"        <th>Dirección</th>\r",
+									"        <th>Ciudad</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>                   <!-- ID de la sucursal -->\r",
+									"            <td>{{this.nombre}}</td>               <!-- Nombre de la sucursal -->\r",
+									"            <td>{{this.tamanio}}</td>              <!-- Tamaño de la sucursal -->\r",
+									"            <td>{{this.telefono}}</td>             <!-- Teléfono de la sucursal -->\r",
+									"            <td>{{this.direccion}}</td>            <!-- Dirección de la sucursal -->\r",
+									"            <td>{{this.id_ciudad.id}} | {{this.id_ciudad.nombre}}</td> <!-- ID y Nombre de la ciudad -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sucursales",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sucursales"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF3 Bodega",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let responseJson = pm.response.json();\r",
+									"let id_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Bodega\"].id;\r",
+									"pm.collectionVariables.set(\"bodega_test\", id_test);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Bodega Test\",\r\n    \"tamanio\": \"Test\",\r\n    \"id_sucursal\": {\r\n        \"id\": {{sucursal_test}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bodegas/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bodegas",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let responseJson = pm.response.json();\r",
+									"let id_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Bodega\"].id;\r",
+									"pm.collectionVariables.set(\"bodega_eliminar_test\", id_test);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Bodega Test copy\",\r\n    \"tamanio\": \"Test\",\r\n    \"id_sucursal\": {\r\n        \"id\": {{sucursal_test}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bodegas/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bodegas",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear id_sucursal invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Bodega Test copy suc inv\",\r\n    \"tamanio\": \"Test\",\r\n    \"id_sucursal\": {\r\n        \"id\": 1000\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bodegas/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bodegas",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar todas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Tamaño</th>\r",
+									"        <th>Sucursal</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>                             <!-- ID de la bodega -->\r",
+									"            <td>{{this.nombre}}</td>                         <!-- Nombre de la bodega -->\r",
+									"            <td>{{this.tamanio}}</td>                        <!-- Tamaño de la bodega -->\r",
+									"            <td>{{this.id_Sucursal.id}} | {{this.id_Sucursal.nombre}}</td>  <!-- ID y Nombre de la sucursal -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bodegas",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bodegas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bodegas/{{bodega_eliminar_test}}/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bodegas",
+								"{{bodega_eliminar_test}}",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF4 Proveedor",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let responseJson = pm.response.json();\r",
+									"let id_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Proveedor\"].id;\r",
+									"pm.collectionVariables.set(\"proveedor_test\", id_test);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Proveedor test\",\r\n    \"telefono\": \"Test\",\r\n    \"direccion\": \"Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/proveedores/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"proveedores",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar todos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Teléfono</th>\r",
+									"        <th>Dirección</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td> <!-- ID -->\r",
+									"            <td>{{this.nombre}}</td> <!-- Nombre -->\r",
+									"            <td>{{this.telefono}}</td> <!-- Teléfono -->\r",
+									"            <td>{{this.direccion}}</td> <!-- Dirección -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/proveedores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"proveedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Proveedor Test actualizado\",\r\n    \"telefono\": \"Test actualizado\",\r\n    \"direccion\": \"Test actualizado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/proveedores/{{proveedor_test}}/edit/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"proveedores",
+								"{{proveedor_test}}",
+								"edit",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF5 Tipo Categoria",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let responseJson = pm.response.json();\r",
+									"let id_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Tipo_categoria\"].id;\r",
+									"pm.collectionVariables.set(\"tipo_categoria_test\", id_test);\r",
+									"\r",
+									"let nombre_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Tipo_categoria\"].nombre;\r",
+									"pm.collectionVariables.set(\"tipo_categoria_test_nombre\",nombre_test);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Categoria test\",\r\n    \"descripcion\":\"Test\",\r\n    \"caracteristicas\":\"Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tipos_categoria/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tipos_categoria",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar - todas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Descripción</th>\r",
+									"        <th>Características</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>                             <!-- ID de la categoría -->\r",
+									"            <td>{{this.nombre}}</td>                         <!-- Nombre de la categoría -->\r",
+									"            <td>{{this.descripcion}}</td>                    <!-- Descripción de la categoría -->\r",
+									"            <td>{{this.caracteristicas}}</td>                <!-- Características de la categoría -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos_categoria",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tipos_categoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar - id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Descripción</th>\r",
+									"        <th>Características</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each tipos}} <!-- Iterar sobre la propiedad \"tipos\" -->\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>                             <!-- ID de la categoría -->\r",
+									"            <td>{{this.nombre}}</td>                         <!-- Nombre de la categoría -->\r",
+									"            <td>{{this.descripcion}}</td>                    <!-- Descripción de la categoría -->\r",
+									"            <td>{{this.caracteristicas}}</td>                <!-- Características de la categoría -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos_categoria/consulta?id={{tipo_categoria_test}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tipos_categoria",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{tipo_categoria_test}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar - id invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos_categoria/consulta?id=1000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tipos_categoria",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta - nombre",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Descripción</th>\r",
+									"        <th>Características</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each tipos}} <!-- Iterar sobre la propiedad \"tipos\" -->\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>                             <!-- ID de la categoría -->\r",
+									"            <td>{{this.nombre}}</td>                         <!-- Nombre de la categoría -->\r",
+									"            <td>{{this.descripcion}}</td>                    <!-- Descripción de la categoría -->\r",
+									"            <td>{{this.caracteristicas}}</td>                <!-- Características de la categoría -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos_categoria/consulta?nombre={{tipo_categoria_test_nombre}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tipos_categoria",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "{{tipo_categoria_test_nombre}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta - nombre invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos_categoria/consulta?nombre=90",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tipos_categoria",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "90"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar - sin parametros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tipos_categoria/consulta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tipos_categoria",
+								"consulta"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF6 Producto",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let responseJson = pm.response.json();\r",
+									"let id_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Producto\"].id;\r",
+									"pm.collectionVariables.set(\"producto_test\", id_test);\r",
+									"let nombre_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Producto\"].nombre;\r",
+									"pm.collectionVariables.set(\"producto_test_nombre\", nombre_test);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto Test\",\r\n    \"fecha_expiracion\": \"2000-01-01\",\r\n    \"codigo_barras\": \"FFFFFF\",\r\n    \"volumen\": 0.1,\r\n    \"peso\": 0.1,\r\n    \"id_tipo_categoria\": {\r\n        \"id\": {{tipo_categoria_test}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear - id_tipo_categoria invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto Test cate inv\",\r\n    \"fecha_expiracion\": \"2000-01-01\",\r\n    \"codigo_barras\": \"FFFFF0\",\r\n    \"volumen\": 0.1,\r\n    \"peso\": 0.1,\r\n    \"id_tipo_categoria\": {\r\n        \"id\": 1000\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar - todos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Fecha de Expiración</th>\r",
+									"        <th>Código de Barras</th>\r",
+									"        <th>Volumen</th>\r",
+									"        <th>Peso</th>\r",
+									"        <th>Tipo de Categoría</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}} <!-- Iterar sobre la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>                             <!-- ID del producto -->\r",
+									"            <td>{{this.nombre}}</td>                         <!-- Nombre del producto -->\r",
+									"            <td>{{this.fecha_expiracion}}</td>              <!-- Fecha de expiración -->\r",
+									"            <td>{{this.codigo_barras}}</td>                 <!-- Código de barras -->\r",
+									"            <td>{{this.volumen}}</td>                        <!-- Volumen -->\r",
+									"            <td>{{this.peso}}</td>                           <!-- Peso -->\r",
+									"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td>  <!-- ID y Nombre del tipo de categoría -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar - id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Fecha de Expiración</th>\r",
+									"        <th>Código de Barras</th>\r",
+									"        <th>Volumen</th>\r",
+									"        <th>Peso</th>\r",
+									"        <th>Tipo de Categoría</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each tipos}} <!-- Iterar sobre la propiedad \"tipos\" -->\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>                             <!-- ID del producto -->\r",
+									"            <td>{{this.nombre}}</td>                         <!-- Nombre del producto -->\r",
+									"            <td>{{this.fecha_expiracion}}</td>              <!-- Fecha de expiración -->\r",
+									"            <td>{{this.codigo_barras}}</td>                 <!-- Código de barras -->\r",
+									"            <td>{{this.volumen}}</td>                        <!-- Volumen -->\r",
+									"            <td>{{this.peso}}</td>                           <!-- Peso -->\r",
+									"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td>  <!-- ID y Nombre del tipo de categoría -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?id={{producto_test}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{producto_test}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar - id invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?id=1000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta - nombre",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Fecha de Expiración</th>\r",
+									"        <th>Código de Barras</th>\r",
+									"        <th>Volumen</th>\r",
+									"        <th>Peso</th>\r",
+									"        <th>Tipo de Categoría</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each tipos}} <!-- Iterar sobre la propiedad \"tipos\" -->\r",
+									"        <tr>\r",
+									"            <td>{{this.id}}</td>                             <!-- ID del producto -->\r",
+									"            <td>{{this.nombre}}</td>                         <!-- Nombre del producto -->\r",
+									"            <td>{{this.fecha_expiracion}}</td>              <!-- Fecha de expiración -->\r",
+									"            <td>{{this.codigo_barras}}</td>                 <!-- Código de barras -->\r",
+									"            <td>{{this.volumen}}</td>                        <!-- Volumen -->\r",
+									"            <td>{{this.peso}}</td>                           <!-- Peso -->\r",
+									"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td>  <!-- ID y Nombre del tipo de categoría -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?nombre={{producto_test_nombre}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "{{producto_test_nombre}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta - nombre invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?nombre=1000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar - sin parametros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto test actualizado\",\r\n    \"fecha_expiracion\": \"2024-01-01\",\r\n    \"codigo_barras\": 1,\r\n    \"volumen\": 1.1,\r\n    \"peso\": 1.1,\r\n    \"id_tipo_categoria\": {\r\n        \"id\": {{tipo_categoria_test}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/{{producto_test}}/edit/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{{producto_test}}",
+								"edit",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar - id_tipo_categoria invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto test actualizado\",\r\n    \"fecha_expiracion\": \"2024-01-01\",\r\n    \"codigo_barras\": 1,\r\n    \"volumen\": 1.1,\r\n    \"peso\": 1.1,\r\n    \"id_tipo_categoria\": {\r\n        \"id\": 1000\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/{{producto_test}}/edit/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{{producto_test}}",
+								"edit",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF7 Orden Compra",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"let responseJson = pm.response.json();\r",
+									"let id_test = responseJson[\"uniandes.edu.co.proyecto.modelo.Orden_compra\"].id;\r",
+									"pm.collectionVariables.set(\"orden_compra_test\", id_test);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha_creacion\":\"2023-02-10\",\r\n    \"fecha_esperada\":\"2024-03-11\",\r\n    \"estado\":\"vigente\",\r\n    \"id_bodega\":{\r\n        \"id\":{{bodega_test}}\r\n    },\r\n    \"id_proveedor\":{\r\n        \"id\":{{proveedor_test}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ordenes_compra/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ordenes_compra",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear - estado invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha_creacion\":\"2023-02-10\",\r\n    \"fecha_esperada\":\"2024-03-11\",\r\n    \"estado\":\"amazon\",\r\n    \"id_bodega\":{\r\n        \"id\":{{bodega_test}}\r\n    },\r\n    \"id_proveedor\":{\r\n        \"id\":{{proveedor_test}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ordenes_compra/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ordenes_compra",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear - id_bodega invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha_creacion\":\"2023-02-10\",\r\n    \"fecha_esperada\":\"2024-03-11\",\r\n    \"estado\":\"vigente\",\r\n    \"id_bodega\":{\r\n        \"id\":1000\r\n    },\r\n    \"id_proveedor\":{\r\n        \"id\":{{proveedor_test}}\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ordenes_compra/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ordenes_compra",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear - id_proveedor invalido Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha_creacion\":\"2023-02-10\",\r\n    \"fecha_esperada\":\"2024-03-11\",\r\n    \"estado\":\"vigente\",\r\n    \"id_bodega\":{\r\n        \"id\":{{bodega_test}}\r\n    },\r\n    \"id_proveedor\":{\r\n        \"id\":1000\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ordenes_compra/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ordenes_compra",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF8 Orden Compra",
+			"item": [
+				{
+					"name": "Actulizar - estado a anulada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ordenes_compra/{{orden_compra_test}}/anular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ordenes_compra",
+								"{{orden_compra_test}}",
+								"anular"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actulizar - estado a anulada - no vigente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ordenes_compra/{{orden_compra_test}}/anular",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ordenes_compra",
+								"{{orden_compra_test}}",
+								"anular"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF9 Orden Compra",
+			"item": [
+				{
+					"name": "Consultar - todas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>orden</th>\r",
+									"        <th>fecha creacion</th>\r",
+									"        <th>fecha esperada</th>\r",
+									"        <th>estado</th>\r",
+									"        <th>bodega</th>\r",
+									"        <th>proveedor</th>\r",
+									"        <th>cantidad</th>\r",
+									"        <th>precio unitario</th>\r",
+									"        <th>producto</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td>\r",
+									"            <td>{{this.[1]}}</td>\r",
+									"            <td>{{this.[2]}}</td>\r",
+									"            <td>{{this.[3]}}</td>\r",
+									"            <td>{{this.[4]}}</td>\r",
+									"            <td>{{this.[5]}}</td>\r",
+									"            <td>{{this.[6]}}</td>\r",
+									"            <td>{{this.[7]}}</td>\r",
+									"            <td>{{this.[8]}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/ordenes_compra",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ordenes_compra"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RF10 Contiene",
+			"item": [
+				{
+					"name": "Crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contiene/1/1/new/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"contiene",
+								"1",
+								"1",
+								"new",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Registra el ingreso de productos a una bodega"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "ciudad_test",
+			"value": ""
+		},
+		{
+			"key": "sucursal_test",
+			"value": ""
+		},
+		{
+			"key": "proveedor_test",
+			"value": ""
+		},
+		{
+			"key": "bodega_test",
+			"value": ""
+		},
+		{
+			"key": "tipo_categoria_test",
+			"value": ""
+		},
+		{
+			"key": "tipo_categoria_test_nombre",
+			"value": ""
+		},
+		{
+			"key": "producto_test",
+			"value": ""
+		},
+		{
+			"key": "producto_test_nombre",
+			"value": ""
+		},
+		{
+			"key": "orden_compra_test",
+			"value": ""
+		},
+		{
+			"key": "bodega_eliminar_test",
+			"value": ""
+		}
+	]
+}

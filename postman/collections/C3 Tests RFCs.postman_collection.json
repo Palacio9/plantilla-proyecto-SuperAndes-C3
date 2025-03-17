@@ -1,0 +1,1879 @@
+{
+	"info": {
+		"_postman_id": "bf20e293-92b9-4748-b334-dbf81f6aca51",
+		"name": "C3 Tests RFCs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37456751"
+	},
+	"item": [
+		{
+			"name": "RFC1",
+			"item": [
+				{
+					"name": "Mostrar el indice de ocupcion de productos de bodegas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID Bodega</th>\r",
+									"        <th>ID Producto</th>\r",
+									"        <th>Ocupación</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID Bodega -->\r",
+									"            <td>{{this.[1]}}</td> <!-- ID Producto -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Ocupación -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?ids=1,4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "1,4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar el indice de ocupcion de productos de bodegas con lista vacia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?ids=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar el indice de ocupcion de productos de bodegas con producto sin bodega",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?ids=6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar el indice de ocupcion de productos de bodegas con producto y parametros adicionales",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?id=1&ids=9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "ids",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RFC2",
+			"item": [
+				{
+					"name": "Rango de precio",
+					"item": [
+						{
+							"name": "Mostrar",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>Bodega</th>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Categoria</th>\r",
+											"        <th>Precio</th>\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each this}} <!-- Iterar sobre cada elemento de la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.[0]}} | {{this.[1]}}</td>  <!-- Composición de Bodega -->\r",
+											"            <td>{{this.[2]}}</td>                  <!-- ID del Producto -->\r",
+											"            <td>{{this.[3]}}</td>                  <!-- Nombre del Producto -->\r",
+											"            <td>{{this.[4]}}</td>                  <!-- Fecha de Expiración -->\r",
+											"            <td>{{this.[5]}}</td>                  <!-- Código de Barras -->\r",
+											"            <td>{{this.[6]}}</td>                  <!-- Volumen -->\r",
+											"            <td>{{this.[7]}}</td>                  <!-- Peso -->\r",
+											"            <td>{{this.[8]}} | {{this.[10]}}</td>  <!-- Composición de Categoría -->\r",
+											"            <td>{{this.[9]}}                       \r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?minPrice=3000&maxPrice=10000",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "minPrice",
+											"value": "3000"
+										},
+										{
+											"key": "maxPrice",
+											"value": "10000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - respuesta vacia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?minPrice=3004&maxPrice=3005",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "minPrice",
+											"value": "3004"
+										},
+										{
+											"key": "maxPrice",
+											"value": "3005"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Rango fecha expiracion",
+					"item": [
+						{
+							"name": "Mostrar - fecha inferior a ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Tipo de Categoría</th>\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each response}} <!-- Iterar sobre la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.id}}</td>                             <!-- ID del producto -->\r",
+											"            <td>{{this.nombre}}</td>                         <!-- Nombre del producto -->\r",
+											"            <td>{{this.fecha_expiracion}}</td>              <!-- Fecha de expiración -->\r",
+											"            <td>{{this.codigo_barras}}</td>                 <!-- Código de barras -->\r",
+											"            <td>{{this.volumen}}</td>                        <!-- Volumen -->\r",
+											"            <td>{{this.peso}}</td>                           <!-- Peso -->\r",
+											"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td>  <!-- ID y Nombre del tipo de categoría -->\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?fechaInferiorA=2024-10-16",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "fechaInferiorA",
+											"value": "2024-10-16"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - fecha inferior a - respuesta vacia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?fechaInferiorA=1000-02-02",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "fechaInferiorA",
+											"value": "1000-02-02"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - fecha inferior a - entrada invalida",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?fechaInferiorA=Karol",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "fechaInferiorA",
+											"value": "Karol"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - fecha posterior a",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Tipo de Categoría</th>\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each response}} <!-- Iterar sobre la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.id}}</td>                             <!-- ID del producto -->\r",
+											"            <td>{{this.nombre}}</td>                         <!-- Nombre del producto -->\r",
+											"            <td>{{this.fecha_expiracion}}</td>              <!-- Fecha de expiración -->\r",
+											"            <td>{{this.codigo_barras}}</td>                 <!-- Código de barras -->\r",
+											"            <td>{{this.volumen}}</td>                        <!-- Volumen -->\r",
+											"            <td>{{this.peso}}</td>                           <!-- Peso -->\r",
+											"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td>  <!-- ID y Nombre del tipo de categoría -->\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?fechaPosteriorA=2020-02-01",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "fechaPosteriorA",
+											"value": "2020-02-01"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - fecha posterior a - respuesta vacia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?fechaPosteriorA=5000-02-02",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "fechaPosteriorA",
+											"value": "5000-02-02"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - fecha posterior a - entrada invalida",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?fechaPosteriorA=Karol",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "fechaPosteriorA",
+											"value": "Karol"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - fecha rango",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Tipo de Categoría</th>\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each response}} <!-- Iterar sobre la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.id}}</td>                             <!-- ID del producto -->\r",
+											"            <td>{{this.nombre}}</td>                         <!-- Nombre del producto -->\r",
+											"            <td>{{this.fecha_expiracion}}</td>              <!-- Fecha de expiración -->\r",
+											"            <td>{{this.codigo_barras}}</td>                 <!-- Código de barras -->\r",
+											"            <td>{{this.volumen}}</td>                        <!-- Volumen -->\r",
+											"            <td>{{this.peso}}</td>                           <!-- Peso -->\r",
+											"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td>  <!-- ID y Nombre del tipo de categoría -->\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?fechaPosteriorA=2025-01-01&fechaInferiorA=2027-01-01",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "fechaPosteriorA",
+											"value": "2025-01-01"
+										},
+										{
+											"key": "fechaInferiorA",
+											"value": "2027-01-01"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - fecha rango - respuesta vacia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Tipo de Categoría</th>\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each response}} <!-- Iterar sobre la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.id}}</td>                             <!-- ID del producto -->\r",
+											"            <td>{{this.nombre}}</td>                         <!-- Nombre del producto -->\r",
+											"            <td>{{this.fecha_expiracion}}</td>              <!-- Fecha de expiración -->\r",
+											"            <td>{{this.codigo_barras}}</td>                 <!-- Código de barras -->\r",
+											"            <td>{{this.volumen}}</td>                        <!-- Volumen -->\r",
+											"            <td>{{this.peso}}</td>                           <!-- Peso -->\r",
+											"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td>  <!-- ID y Nombre del tipo de categoría -->\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return { response: pm.response.json() }; // Obtener la respuesta JSON sin modificaciones\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?fechaPosteriorA=2035-01-01&fechaInferiorA=2037-01-01",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "fechaPosteriorA",
+											"value": "2035-01-01"
+										},
+										{
+											"key": "fechaInferiorA",
+											"value": "2037-01-01"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sucursal",
+					"item": [
+						{
+							"name": "Mostrar - pretenecientes a una sucursal",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Categoria</th>\r",
+											"        <th>ID Sucursal</th>  <!-- Nueva columna con el ID de la sucursal -->\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each this}} <!-- Iterar sobre cada elemento de la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.[0]}}</td>                  <!-- ID del Producto -->\r",
+											"            <td>{{this.[1]}}</td>                  <!-- Nombre del Producto -->\r",
+											"            <td>{{this.[2]}}</td>                  <!-- Fecha de Expiración -->\r",
+											"            <td>{{this.[3]}}</td>                  <!-- Código de Barras -->\r",
+											"            <td>{{this.[4]}}</td>                  <!-- Volumen -->\r",
+											"            <td>{{this.[5]}}</td>                  <!-- Peso -->\r",
+											"            <td>{{this.[6]}}</td>                  <!-- Categoria (ID de tipo de categoría) -->\r",
+											"            <td>{{this.[7]}}</td>                  <!-- ID Sucursal -->\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?id_sucursal=1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "id_sucursal",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - pretenecientes a una sucursal - respuesta vacia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Categoria</th>\r",
+											"        <th>ID Sucursal</th>  <!-- Nueva columna con el ID de la sucursal -->\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each this}} <!-- Iterar sobre cada elemento de la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.[0]}}</td>                  <!-- ID del Producto -->\r",
+											"            <td>{{this.[1]}}</td>                  <!-- Nombre del Producto -->\r",
+											"            <td>{{this.[2]}}</td>                  <!-- Fecha de Expiración -->\r",
+											"            <td>{{this.[3]}}</td>                  <!-- Código de Barras -->\r",
+											"            <td>{{this.[4]}}</td>                  <!-- Volumen -->\r",
+											"            <td>{{this.[5]}}</td>                  <!-- Peso -->\r",
+											"            <td>{{this.[6]}}</td>                  <!-- Categoria (ID de tipo de categoría) -->\r",
+											"            <td>{{this.[7]}}</td>                  <!-- ID Sucursal -->\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?id_sucursal=100",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "id_sucursal",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Categoria",
+					"item": [
+						{
+							"name": "Mostrar - pretenecientes a un tipo de categoria",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Categoria (ID | Nombre)</th> <!-- Compuesto de ID y Nombre -->\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each this}} <!-- Iterar sobre cada elemento de la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.id}}</td>                                 <!-- ID del Producto -->\r",
+											"            <td>{{this.nombre}}</td>                             <!-- Nombre del Producto -->\r",
+											"            <td>{{this.fecha_expiracion}}</td>                   <!-- Fecha de Expiración -->\r",
+											"            <td>{{this.codigo_barras}}</td>                      <!-- Código de Barras -->\r",
+											"            <td>{{this.volumen}}</td>                            <!-- Volumen -->\r",
+											"            <td>{{this.peso}}</td>                               <!-- Peso -->\r",
+											"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td> <!-- Categoria: ID | Nombre -->\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?id_tipo_categoria=3",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "id_tipo_categoria",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar - pretenecientes a un tipo de categoria - respuesta vacia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Nombre</th>\r",
+											"        <th>Fecha de Expiración</th>\r",
+											"        <th>Código de Barras</th>\r",
+											"        <th>Volumen</th>\r",
+											"        <th>Peso</th>\r",
+											"        <th>Categoria (ID | Nombre)</th> <!-- Compuesto de ID y Nombre -->\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each this}} <!-- Iterar sobre cada elemento de la respuesta -->\r",
+											"        <tr>\r",
+											"            <td>{{this.id}}</td>                                 <!-- ID del Producto -->\r",
+											"            <td>{{this.nombre}}</td>                             <!-- Nombre del Producto -->\r",
+											"            <td>{{this.fecha_expiracion}}</td>                   <!-- Fecha de Expiración -->\r",
+											"            <td>{{this.codigo_barras}}</td>                      <!-- Código de Barras -->\r",
+											"            <td>{{this.volumen}}</td>                            <!-- Volumen -->\r",
+											"            <td>{{this.peso}}</td>                               <!-- Peso -->\r",
+											"            <td>{{this.id_tipo_categoria.id}} | {{this.id_tipo_categoria.nombre}}</td> <!-- Categoria: ID | Nombre -->\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/productos/consulta?id_tipo_categoria=300",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"productos",
+										"consulta"
+									],
+									"query": [
+										{
+											"key": "id_tipo_categoria",
+											"value": "300"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "RFC3",
+			"item": [
+				{
+					"name": "Mostrar - pertenecientes a una bodega y sucursal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Cantidad Actual</th>\r",
+									"        <th>Cantidad Mínima</th>\r",
+									"        <th>Costo Promedio</th>\r",
+									"        <th>ID Sucursal</th>\r",
+									"        <th>ID Bodega</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID -->\r",
+									"            <td>{{this.[1]}}</td> <!-- Nombre del producto -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Cantidad Actual -->\r",
+									"            <td>{{this.[3]}}</td> <!-- Cantidad Mínima -->\r",
+									"            <td>{{this.[4]}}</td> <!-- Costo Promedio -->\r",
+									"            <td>{{this.[5]}}</td> <!-- ID Sucursal -->\r",
+									"            <td>{{this.[6]}}</td> <!-- ID Bodega -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?id_sucursal=2&id_bodega=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id_sucursal",
+									"value": "2"
+								},
+								{
+									"key": "id_bodega",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar - pertenecientes a una bodega y sucursal - respuesta vacia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Cantidad Actual</th>\r",
+									"        <th>Cantidad Mínima</th>\r",
+									"        <th>Costo Promedio</th>\r",
+									"        <th>ID Sucursal</th>\r",
+									"        <th>ID Bodega</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID -->\r",
+									"            <td>{{this.[1]}}</td> <!-- Nombre del producto -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Cantidad Actual -->\r",
+									"            <td>{{this.[3]}}</td> <!-- Cantidad Mínima -->\r",
+									"            <td>{{this.[4]}}</td> <!-- Costo Promedio -->\r",
+									"            <td>{{this.[5]}}</td> <!-- ID Sucursal -->\r",
+									"            <td>{{this.[6]}}</td> <!-- ID Bodega -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?id_sucursal=1&id_bodega=4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id_sucursal",
+									"value": "1"
+								},
+								{
+									"key": "id_bodega",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar - pertenecientes a una bodega y sucursal - sin sucursal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Cantidad Actual</th>\r",
+									"        <th>Cantidad Mínima</th>\r",
+									"        <th>Costo Promedio</th>\r",
+									"        <th>ID Sucursal</th>\r",
+									"        <th>ID Bodega</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID -->\r",
+									"            <td>{{this.[1]}}</td> <!-- Nombre del producto -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Cantidad Actual -->\r",
+									"            <td>{{this.[3]}}</td> <!-- Cantidad Mínima -->\r",
+									"            <td>{{this.[4]}}</td> <!-- Costo Promedio -->\r",
+									"            <td>{{this.[5]}}</td> <!-- ID Sucursal -->\r",
+									"            <td>{{this.[6]}}</td> <!-- ID Bodega -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta?id_bodega=4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id_bodega",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RFC4",
+			"item": [
+				{
+					"name": "Mostrar - sucursales con un producto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Tamaño</th>\r",
+									"        <th>Teléfono</th>\r",
+									"        <th>Dirección</th>\r",
+									"        <th>ID Ciudad</th>\r",
+									"        <th>ID Producto</th>\r",
+									"        <th>Nombre Producto</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID -->\r",
+									"            <td>{{this.[1]}}</td> <!-- Nombre -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Tamaño -->\r",
+									"            <td>{{this.[3]}}</td> <!-- Teléfono -->\r",
+									"            <td>{{this.[4]}}</td> <!-- Dirección -->\r",
+									"            <td>{{this.[5]}}</td> <!-- ID Ciudad -->\r",
+									"            <td>{{this.[6]}}</td> <!-- ID Producto -->\r",
+									"            <td>{{this.[7]}}</td> <!-- Nombre Producto -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sucursales/consulta?id_producto=7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sucursales",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id_producto",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar - por id - respuesta vacia",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Tamaño</th>\r",
+									"        <th>Teléfono</th>\r",
+									"        <th>Dirección</th>\r",
+									"        <th>ID Ciudad</th>\r",
+									"        <th>ID Producto</th>\r",
+									"        <th>Nombre Producto</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID -->\r",
+									"            <td>{{this.[1]}}</td> <!-- Nombre -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Tamaño -->\r",
+									"            <td>{{this.[3]}}</td> <!-- Teléfono -->\r",
+									"            <td>{{this.[4]}}</td> <!-- Dirección -->\r",
+									"            <td>{{this.[5]}}</td> <!-- ID Ciudad -->\r",
+									"            <td>{{this.[6]}}</td> <!-- ID Producto -->\r",
+									"            <td>{{this.[7]}}</td> <!-- Nombre Producto -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sucursales/consulta?id_producto=6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sucursales",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "id_producto",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar - por nombre",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Tamaño</th>\r",
+									"        <th>Teléfono</th>\r",
+									"        <th>Dirección</th>\r",
+									"        <th>ID Ciudad</th>\r",
+									"        <th>ID Producto</th>\r",
+									"        <th>Nombre Producto</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID -->\r",
+									"            <td>{{this.[1]}}</td> <!-- Nombre -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Tamaño -->\r",
+									"            <td>{{this.[3]}}</td> <!-- Teléfono -->\r",
+									"            <td>{{this.[4]}}</td> <!-- Dirección -->\r",
+									"            <td>{{this.[5]}}</td> <!-- ID Ciudad -->\r",
+									"            <td>{{this.[6]}}</td> <!-- ID Producto -->\r",
+									"            <td>{{this.[7]}}</td> <!-- Nombre Producto -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sucursales/consulta?nombre_producto=Licuadora",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sucursales",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "nombre_producto",
+									"value": "Licuadora"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar - por nombre - resultado vacio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Tamaño</th>\r",
+									"        <th>Teléfono</th>\r",
+									"        <th>Dirección</th>\r",
+									"        <th>ID Ciudad</th>\r",
+									"        <th>ID Producto</th>\r",
+									"        <th>Nombre Producto</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID -->\r",
+									"            <td>{{this.[1]}}</td> <!-- Nombre -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Tamaño -->\r",
+									"            <td>{{this.[3]}}</td> <!-- Teléfono -->\r",
+									"            <td>{{this.[4]}}</td> <!-- Dirección -->\r",
+									"            <td>{{this.[5]}}</td> <!-- ID Ciudad -->\r",
+									"            <td>{{this.[6]}}</td> <!-- ID Producto -->\r",
+									"            <td>{{this.[7]}}</td> <!-- Nombre Producto -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sucursales/consulta?nombre_producto=Helado",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sucursales",
+								"consulta"
+							],
+							"query": [
+								{
+									"key": "nombre_producto",
+									"value": "Helado"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar - sin parametros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sucursales/consulta",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sucursales",
+								"consulta"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RFC5",
+			"item": [
+				{
+					"name": "Mostrar - requieren orden de compra",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Nombre</th>\r",
+									"        <th>Bodega</th>\r",
+									"        <th>Sucursal</th>\r",
+									"        <th>Cantidad</th>\r",
+									"        <th>Cantidad Mínima</th>\r",
+									"        <th>Proveedor</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each this}} <!-- Iterar sobre cada fila de la respuesta -->\r",
+									"        <tr>\r",
+									"            <td>{{this.[0]}}</td> <!-- ID -->\r",
+									"            <td>{{this.[1]}}</td> <!-- Nombre -->\r",
+									"            <td>{{this.[2]}}</td> <!-- Bodega -->\r",
+									"            <td>{{this.[3]}}</td> <!-- Sucursal -->\r",
+									"            <td>{{this.[4]}}</td> <!-- Cantidad -->\r",
+									"            <td>{{this.[5]}}</td> <!-- Cantidad Mínima -->\r",
+									"            <td>{{this.[6]}}</td> <!-- Proveedor -->\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return pm.response.json(); // Obtener la respuesta JSON directamente\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/consulta/reqOrdenCompra",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"consulta",
+								"reqOrdenCompra"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
